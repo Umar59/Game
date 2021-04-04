@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class WaveSpawner : MonoBehaviour
 
     }
     public Wave[] waves;
+    public Transform[] spawn_points;
     private int nextWave = 0;                                           //опрериует массивом           ||                  operates the array
 
     public float timeBetweenWaves = 5f;
@@ -103,6 +106,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform enemy)                                                                //функция спавна
     {                                                                                              //spawn function itself
         Debug.Log("Spawnin an enemy" + enemy.name);
-        Instantiate(enemy, transform.position, transform.rotation);
+        Transform sp = spawn_points[UnityEngine.Random.Range(0, spawn_points.Length)];
+        Instantiate(enemy, sp.position, sp.rotation);
     }
 }

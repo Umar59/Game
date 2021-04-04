@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\animate.cs" />
     <Compile Include="Assets\Scripts\bilboard.cs" />
     <Compile Include="Assets\Scripts\enemyAgentDestination.cs" />
+    <Compile Include="Assets\Scripts\minimapFollow.cs" />
     <None Include="Assets\PolygonApocalypse\Materials\Misc\Shader\POLYGON_Zombies.shader" />
     <None Include="Assets\PolygonApocalypse\Materials\Misc\Shader\SkyGradient.shader" />
     <None Include="Assets\PolygonApocalypse\Materials\Misc\Shader\POLYGON_Triplanar.shader" />
