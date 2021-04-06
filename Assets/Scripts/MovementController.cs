@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class MovementController : MonoBehaviour
 {
     public Joystick joystick;
@@ -21,7 +22,11 @@ public class MovementController : MonoBehaviour
     private GameObject target;
     private Character _character;
     [HideInInspector]public bool aimAtatus;
-    
+
+    [SerializeField] public int health = 100;
+    public Slider slider;
+    // public ParticleSystem bloodParticle;
+    public GameObject character;
 
     private void Start()
     {
@@ -29,6 +34,9 @@ public class MovementController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _character = GetComponent<Character>();
+        slider.maxValue = health;
+        slider.value = health;
+
     }
 
     private void FixedUpdate()
@@ -107,6 +115,36 @@ public class MovementController : MonoBehaviour
             aimAtatus = false;
         }
     }
-    
-    
+
+
+    public void TakeDamage(int damage)
+    {
+        if (health > 0)
+        {
+            health -= damage;
+            slider.value = health;
+            // bloodParticle.Play();
+            Debug.Log(health);
+        }
+        if (health <= 0)
+        {
+           // character.GetComponent<CapsuleCollider>().enabled = false;    // отключаю коллайдер, чтобы он больше в него не стрелял
+            character.GetComponent<BoxCollider>().enabled = false;
+            // _animator.SetTrigger("Death");
+            SceneManager.LoadScene(0);
+           // StartCoroutine(Death());
+        }
+    }
+    //private IEnumerator Death()
+    //{
+    //    yield return new WaitForSeconds(7f);           // Удаление объекта со сцены
+    //    Destroy(character);
+    //}
+
+
+
+
+
+
+
 }
