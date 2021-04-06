@@ -12,17 +12,22 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent _agent;
     public ParticleSystem bloodParticle;
     public Slider slider;
+    public GameObject minimapIcon;
 
     public GameObject targetHero;
     private bool _attackState;
-
+    public int damage = 1;
+    public float ratePunch = 1f;
+    private float nextPunch;
+    [SerializeField]private MovementController player_damage;
     private void Start()
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
-        targetHero = GameObject.Find("Character");
+        targetHero = GameObject.FindGameObjectWithTag("Player");
         slider.maxValue = health;
         slider.value = health;
+        player_damage = targetHero.GetComponent<MovementController>();
     }
 
     private void Update()
@@ -38,6 +43,13 @@ public class EnemyController : MonoBehaviour
         if (CheckDistance())
         {
             Attack();
+            if (Time.time > nextPunch)
+            {
+                nextPunch = Time.time + 1f / ratePunch;
+               player_damage.TakeDamage(damage);
+
+            }
+            
         }
     }
 
@@ -54,6 +66,7 @@ public class EnemyController : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider>().enabled = false;    // отключаю коллайдер, чтобы он больше в него не стрелял
             gameObject.GetComponent<BoxCollider>().enabled = false;    
             _animator.SetTrigger("Death");
+            Destroy(minimapIcon);
             StartCoroutine(Death(gameObject));
         }
     }
@@ -64,7 +77,11 @@ public class EnemyController : MonoBehaviour
         {
             _animator.SetBool("velocity", true);
         }
-        else   _animator.SetBool("velocity", false);
+        else
+        {
+            _animator.SetBool("velocity", false);
+           
+        }
     }
 
     private IEnumerator Death(GameObject zombie)
@@ -99,4 +116,11 @@ public class EnemyController : MonoBehaviour
     {
         return 1f > Vector3.Distance(transform.position, targetHero.transform.position);
     }
+
 }
+            
+        
+
+
+
+

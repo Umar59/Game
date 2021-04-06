@@ -96,8 +96,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 84
       Script: {instanceID: 0}
-    - Class: 89
-      Script: {instanceID: 0}
     - Class: 90
       Script: {instanceID: 0}
     - Class: 91
@@ -186,6 +184,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 137
       Script: {instanceID: 0}
+    - Class: 154
+      Script: {instanceID: 0}
+    - Class: 156
+      Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 195
@@ -200,6 +202,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
+    - Class: 218
+      Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
     - Class: 223
@@ -207,6 +211,10 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
     - Class: 238
+      Script: {instanceID: 0}
+    - Class: 258
+      Script: {instanceID: 0}
+    - Class: 1953259897
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -463,7 +471,7 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 240c99c219fb3f90553d0628e63e239b
+      Hash: a238b260fdcab6a4172e31e8e249e375
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyController
@@ -883,7 +891,7 @@ ScriptsOnlyBuild:
     className: CinemachineBlenderSettings
   - hash:
       serializedVersion: 2
-      Hash: 29983639d4b2c7f39b0870df22a4dbc8
+      Hash: f9ad9755ddd0fdf2fdde2de60f384d7c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: WaveSpawner
@@ -895,7 +903,7 @@ ScriptsOnlyBuild:
     className: CinemachineImpulseSource
   - hash:
       serializedVersion: 2
-      Hash: f507119ee3c7b66458cc207a0a884944
+      Hash: 98da9ef47b65c3344a9028c7c491f67a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MovementController
@@ -1166,4 +1174,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: F:/Steam/v.0.0.1.apk
+  playerPath: F:/Steam/v.0.0.2.apk

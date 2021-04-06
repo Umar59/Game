@@ -516,7 +516,11 @@ MonoBehaviour:
   health: 100
   bloodParticle: {fileID: 2150006385600509420}
   slider: {fileID: 7768610086467081080}
+  minimapIcon: {fileID: 4806198987275104974}
   targetHero: {fileID: 0}
+  damage: 10
+  ratePunch: 3
+  player_damage: {fileID: 0}
 --- !u!65 &8739831036315901661
 BoxCollider:
   m_ObjectHideFlags: 0

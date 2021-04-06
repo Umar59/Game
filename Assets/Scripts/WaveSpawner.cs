@@ -16,6 +16,7 @@ public class WaveSpawner : MonoBehaviour
         public Transform enemy;
         public int count;
         public float rate;
+        public Transform Boss;
 
     }
     public Wave[] waves;
@@ -35,9 +36,10 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+       
         if (state == SpawnState.WAITING)
         {
-            if (!EnemyIsAlive())                          //стартует новый раунд      тут можно прописать награждение игрока экспишками и тп
+            if (!EnemyIsAlive(waves[nextWave].Boss))                          //стартует новый раунд      тут можно прописать награждение игрока экспишками и тп
             {                                            //starts a new rounf        here u can write down some funcs to reward the player and so on
                 WaveCompleted();
 
@@ -71,7 +73,7 @@ public class WaveSpawner : MonoBehaviour
         }
         nextWave++;
     }
-    bool EnemyIsAlive()                                                                             // проверяет живы ли противники
+    bool EnemyIsAlive(Transform Boss)                                                                             // проверяет живы ли противники
     {                                                                                              // каждые SearchCountdown секунд, чтобы не пробевать по всем объектам в сцене каждый фрейм
         SearchCountdown -= Time.deltaTime;
         if (SearchCountdown <= 0f)                                                                  //Checks if enemies are alive
@@ -80,8 +82,11 @@ public class WaveSpawner : MonoBehaviour
 
             if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
             {
+                Instantiate(Boss, transform.position, transform.rotation);
                 return false;
+                               
             }
+           
         }
         return true;
     }
