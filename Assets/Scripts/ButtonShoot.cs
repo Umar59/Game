@@ -28,6 +28,6 @@ public class ButtonShoot : MonoBehaviour,IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         _shootState = false;
-        movementController.aimAtatus = false;
+        movementController.AimAtatus = false;
     }
 }

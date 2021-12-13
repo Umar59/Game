@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamageable<int>
 {
     [SerializeField] public int health;
     private Animator _animator;
@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     public int damage = 1;
     public float ratePunch = 1f;
     private float nextPunch;
-    [SerializeField]private MovementController player_damage;
+    IDamageable<int> player_damage;
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
         targetHero = GameObject.FindGameObjectWithTag("Player");
         slider.maxValue = health;
         slider.value = health;
-        player_damage = targetHero.GetComponent<MovementController>();
+        player_damage = targetHero.GetComponent<PlayerHealth>();
     }
 
     private void Update()
@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
             Attack();
             if (Time.time > nextPunch)
             {
-                nextPunch = Time.time + 1f / ratePunch;
+               nextPunch = Time.time + 1f / ratePunch;
                player_damage.TakeDamage(damage);
 
             }
@@ -53,23 +53,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        if (health > 0)
-        {
-            health -= damage;
-            slider.value = health;
-            bloodParticle.Play();
-        }
-        if (health <= 0)
-        {
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;    // отключаю коллайдер, чтобы он больше в него не стрелял
-            gameObject.GetComponent<BoxCollider>().enabled = false;    
-            _animator.SetTrigger("Death");
-            Destroy(minimapIcon);
-            StartCoroutine(Death(gameObject));
-        }
-    }
+
 
     private void SetAnimation()
     {
@@ -117,6 +101,23 @@ public class EnemyController : MonoBehaviour
         return 1f > Vector3.Distance(transform.position, targetHero.transform.position);
     }
 
+    public void TakeDamage(int damage)
+    {
+        if (health > 0)
+        {
+            health -= damage;
+            slider.value = health;
+            bloodParticle.Play();
+        }
+        if (health <= 0)
+        {
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;    // отключаю коллайдер, чтобы он больше в него не стрелял
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            _animator.SetTrigger("Death");
+            Destroy(minimapIcon);
+            StartCoroutine(Death(gameObject));
+        }
+    }
 }
             
         

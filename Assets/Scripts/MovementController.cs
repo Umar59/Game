@@ -7,48 +7,48 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MovementController : MonoBehaviour
 {
-    public Joystick joystick;
-    
 
-    public float speedRotation = 5f;
-    public float runSpeed = 20f;
-    public float walkSpeed = 10f;
-    public float rangeForRun = 350f;
+
+    private bool aimStatus;
+    private float speedRotation = 5f;
+    private float runSpeed = 20f;
+    private float walkSpeed = 10f;
+    private float rangeForRun = 350f;
     private float _currentSpeedRotation;
-    
+
+    public Joystick joystick;
     private Rigidbody _rigidbody;
     private Animator _animator;
-
     private GameObject target;
     private Character _character;
-    [HideInInspector]public bool aimAtatus;
-
-    [SerializeField] public int health = 100;
-    public Slider slider;
-    // public ParticleSystem bloodParticle;
     public GameObject character;
+
+    public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
+    public float SpeedRotation { get => speedRotation; set => speedRotation = value; }
+    public float RunSpeed { get => runSpeed; set => runSpeed = value; }
+    public float RangeForRun { get => rangeForRun; set => rangeForRun = value; }
+    public float CurrentSpeedRotation { get => _currentSpeedRotation; set => _currentSpeedRotation = value; }
+    public bool AimAtatus { get => aimStatus; set => aimStatus = value; }
 
     private void Start()
     {
-        _currentSpeedRotation = speedRotation;
+        CurrentSpeedRotation = SpeedRotation;
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _character = GetComponent<Character>();
-        slider.maxValue = health;
-        slider.value = health;
 
     }
 
     private void FixedUpdate()
     {
         Move();
-        
-        if (_character.shootState && aimAtatus)
+
+        if (_character.shootState && AimAtatus)
         {
-          LookIfShoot();  
+            LookIfShoot();
         }
-        
-        
+
+
     }
 
     private void Move()
@@ -59,12 +59,12 @@ public class MovementController : MonoBehaviour
         Quaternion lookRotation =
             moveDirection != Vector3.zero ? Quaternion.LookRotation(moveDirection) : transform.rotation;
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _currentSpeedRotation);
-        
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * CurrentSpeedRotation);
+
         float speed = SetSpeed();
-        
+
         _animator.SetInteger("MoveState", (int)speed);
-        
+
         _rigidbody.AddForce(moveDirection * speed);
     }
 
@@ -74,15 +74,15 @@ public class MovementController : MonoBehaviour
         {
             return 0;
         }
-        if (joystick.force > rangeForRun)
+        if (joystick.force > RangeForRun)
         {
-            _currentSpeedRotation = speedRotation;          
-           return runSpeed; 
+            CurrentSpeedRotation = SpeedRotation;
+            return RunSpeed;
         }
         else
         {
-            _currentSpeedRotation = speedRotation / 1.5f;
-            return walkSpeed;
+            CurrentSpeedRotation = SpeedRotation / 1.5f;
+            return WalkSpeed;
         }
     }
 
@@ -92,59 +92,23 @@ public class MovementController : MonoBehaviour
         transform.LookAt(target.transform);
     }
 
+   
     private void OnTriggerStay(Collider other)        //чекает врагов в коллайдере и назначает цель стрельбы
     {
-        
+
         if (other.tag.Equals("Enemy"))
         {
-             aimAtatus = true;
-             
-             if (other.gameObject.activeSelf == true)
-             {
-                 target = other.gameObject;
-             }
-             
+            AimAtatus = true;
+
+            if (other.gameObject.activeSelf == true)    target = other.gameObject;         
         }
-        
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Equals("Enemy"))
-        {
-            aimAtatus = false;
-        }
+        if (other.tag.Equals("Enemy"))  AimAtatus = false;
+        
     }
-
-
-    public void TakeDamage(int damage)
-    {
-        if (health > 0)
-        {
-            health -= damage;
-            slider.value = health;
-            // bloodParticle.Play();
-            Debug.Log(health);
-        }
-        if (health <= 0)
-        {
-           // character.GetComponent<CapsuleCollider>().enabled = false;    // отключаю коллайдер, чтобы он больше в него не стрелял
-            character.GetComponent<BoxCollider>().enabled = false;
-            // _animator.SetTrigger("Death");
-            SceneManager.LoadScene(0);
-           // StartCoroutine(Death());
-        }
-    }
-    //private IEnumerator Death()
-    //{
-    //    yield return new WaitForSeconds(7f);           // Удаление объекта со сцены
-    //    Destroy(character);
-    //}
-
-
-
-
-
-
-
 }
+

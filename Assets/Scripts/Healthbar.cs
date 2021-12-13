@@ -1,17 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 public class Healthbar : MonoBehaviour
 {
-    public Slider slider;
+    private Slider slider;
+
+    private void Start()
+    {
+        try     { slider = GetComponent<Slider>(); }
+        catch   { Debug.Log("Failed to get Slider component"); }
+    }
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
         slider.value = health;
     }
-
-    // Update is called once per frame
     public void SetCurrentHealth(int health)
     {
         slider.value = health;
