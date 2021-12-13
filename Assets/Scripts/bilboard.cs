@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class bilboard : MonoBehaviour
 {
-    public GameObject camera;
+    
+    public Camera camera;
 
     private void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
     void LateUpdate()
     {

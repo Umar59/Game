@@ -92,25 +92,21 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator SpawnWave(Wave wave)
     {
-        Debug.Log("Spawning wave" + wave.count);
         state = SpawnState.SPAWNING;
 
         for (int i = 0; i < wave.count; i++)                                                            //спавнит врагов через определенный промежуток времени wave.rate
         {                                                                                              //spawns enemies each 1/wave.rate seconds
             SpawnEnemy(wave.enemy);
-            Debug.Log("Spawnin an enemy");
             yield return new WaitForSeconds(1f / wave.rate);
         }
 
 
         state = SpawnState.WAITING;
-        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         yield break;
     }
 
     void SpawnEnemy(Transform enemy)                                                                //функция спавна
     {                                                                                              //spawn function itself
-        Debug.Log("Spawnin an enemy" + enemy.name);
         Transform sp = spawn_points[UnityEngine.Random.Range(0, spawn_points.Length)];
         Instantiate(enemy, sp.position, sp.rotation);
     }
